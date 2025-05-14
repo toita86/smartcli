@@ -3,7 +3,7 @@ import sys
 import requests
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "codellama:latest"
+MODEL = "gemma:latest"
 
 
 def ask_ollama(nl_query):
@@ -16,17 +16,32 @@ def ask_ollama(nl_query):
     Returns:
         str: The output of the task performed by Ollama.
     """
-    prompt = f"You are a helpful Linux shell assistant. \
-        Convert the following natural language instruction \
-        into a single bash command, it must not be given nothing more than the command \
-        :\n\nInstruction: {nl_query}\n\nCommand:"
+    prompt = f"""You are a Linux shell assistant. 
+        Your only task is to convert natural language instructions into a single bash command. 
+        Do not provide any explanation or context. 
+        Only respond with a single line in the format: cmd:<command>
+
+        Instruction: {nl_query}
+        cmd:"""
+
     response = requests.post(
         OLLAMA_URL, json={"model": MODEL, "prompt": prompt, "stream": False}, timeout=10
     )
-    return response.json()["response"].strip()
+    raw = response.json()["response"].strip()
+
+    # Extract the command after 'cmd:'
+    if raw.lower().startswith("cmd:"):
+        cmd = raw[4:].strip()
+    else:
+        cmd = raw.strip()
+
+    # Clean up possible formatting
+    # Remove backticks, quotes, and extract only the first line (the actual bash command)
+    cmd = cmd.strip("`\"'\n ").split("\n")[0]
+    return cmd
 
 
-def main():
+def cli():
     """
     The main entry point for the smartcli program.
 
@@ -37,7 +52,7 @@ def main():
         None
     """
     if len(sys.argv) < 2:
-        print("Usage: python smartcli.py 'Your natural language query here'")
+        print("Usage: smart-cli 'your natural language query'")
         return
 
     nl_query = " ".join(sys.argv[1:])
@@ -45,14 +60,9 @@ def main():
 
     bash_cmd = ask_ollama(nl_query)
     print(f"💡 Suggested command:\n{bash_cmd}")
-    bash_cmd = bash_cmd.strip("`").strip('"').strip("'")
 
     confirm = input("Run this command? [y/N]: ").strip().lower()
     if confirm == "y":
-        subprocess.run(bash_cmd, shell=True, check=True)
+        subprocess.run(bash_cmd, shell=True)
     else:
         print("❌ Cancelled.")
-
-
-if __name__ == "__main__":
-    main()

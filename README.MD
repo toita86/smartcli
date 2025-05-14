@@ -7,7 +7,7 @@ Smartcli is a Python script that uses Ollama to convert natural language instruc
 
 To use Smartcli, simply run it with the desired natural language query as an argument. For example:
 ```bash
-python smartcli.py "List all the files"
+smartcli.py "List all the files"
 ```
 The script will ask Ollama to convert the query into a Bash command and then prompt you to confirm whether to run the command. If the confirmation is successful, the command will be executed using `subprocess`.
 
