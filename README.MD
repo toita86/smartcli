@@ -36,4 +36,5 @@ Smartcli has several features that make it a powerful tool for automating tasks 
 
 
 ## Next possible implementation
+* **Dangerous commands**: If the command suggested can cause serious harm a warning is showed
 * **Error Detection**: If the user's input results in an error or a syntax issue with the generated Bash command, Smartcli will notify them of the problem and provide suggestions for correcting the issue.
