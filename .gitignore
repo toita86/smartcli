@@ -1,7 +1,6 @@
-# Python cache
-__pycache__
-
-
-# Build files
-
-*.egg-info
+# Ignore Python build and distribution folders
+dist/
+build/
+*.pyc
+__pycache__/
+*.egg-info/
