@@ -6,10 +6,10 @@ Smartcli is a Python script that uses Ollama to convert natural language instruc
 ## Requirements
 
 Smartcli requires having installed [ollama](https://ollama.com/) then download a model to your likings, works really great with `codellama` the `7b` version. 
-Heavy models that thake a long time to generate a response will throw a timeout error.
+It's not meant to be used with heavy models that take a long time to generate a response, but by using the `-t` flag the timeout for the  Ollama response can be extended.
 
 ## Setup
-If if the first use just type `smart-cli` and follow the setup wizard.
+If is the first use just type `smart-cli` and follow the setup wizard.
 
 Later is possible to list all the models available
 ```
@@ -35,6 +35,6 @@ Smartcli has several features that make it a powerful tool for automating tasks 
 * **Natural Language Support**: Smartcli uses Ollama to convert natural language instructions into Bash commands. This means that users can give their instructions in their own words, rather than having to learn a specific syntax or command structure.
 
 
-## Next possible implementation
+## Next possible implementations:
 * **Dangerous commands**: If the command suggested can cause serious harm a warning is showed
 * **Error Detection**: If the user's input results in an error or a syntax issue with the generated Bash command, Smartcli will notify them of the problem and provide suggestions for correcting the issue.
