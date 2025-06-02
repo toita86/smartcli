@@ -19,6 +19,10 @@ then set the one you like with
 ```
 $ smart-cli --model <model_name>
 ```
+optionally set the timeout for the response
+```
+$ smart-cli --timeout <integer>
+``` 
 
 ## Usage
 
