@@ -39,6 +39,7 @@ Smartcli has several features that make it a powerful tool for automating tasks 
 * **Natural Language Support**: Smartcli uses Ollama to convert natural language instructions into Bash commands. This means that users can give their instructions in their own words, rather than having to learn a specific syntax or command structure.
 
 
-## Next possible implementations:
+## To do:
 * **Dangerous commands**: If the command suggested can cause serious harm a warning is showed
 * **Error Detection**: If the user's input results in an error or a syntax issue with the generated Bash command, Smartcli will notify them of the problem and provide suggestions for correcting the issue.
+* **History of the previous generated commands**: the option to see an re use past asked commands
