@@ -25,37 +25,34 @@ def ask_ollama(model, timeout, nl_query):
     prompt = f"""You are a Linux shell assistant. 
         Your only task is to convert natural language instructions into a single bash command. 
         Do not provide any explanation or context. 
-        Only respond with a single line in the format: cmd:<command>
 
         Instruction: {nl_query}
-        cmd:"""
+        Respond using JSON"""
 
     response = requests.post(
         OLLAMA_URL,
-        json={"model": model, "prompt": prompt, "stream": False},
+        json={
+            "model": model,
+            "prompt": prompt,
+            "format": {
+                "type": "object",
+                "properties": {
+                    "cmd": {"type": "string"},
+                },
+                "required": ["cmd"],
+            },
+            "stream": False,
+        },
         timeout=timeout,
     )
-    raw = response.json()["response"].strip()
-
-    # Extract the command after 'cmd:'
-    if raw.lower().startswith("cmd:"):
-        cmd = raw[4:].strip()
-    else:
-        cmd = raw.strip()
-
-    # Clean up possible formatting
-    # Remove backticks, quotes, and extract only the first line (the actual bash command)
-    cmd = cmd.strip("`\"'\n ").split("\n")[0]
-    return cmd
+    raw_res = response.json()["response"].strip()
+    res = json.loads(raw_res)
+    return res["cmd"]
 
 
 def show_available_models():
     """Display available models"""
     subprocess.run("ollama list", shell=True)
-
-
-import os
-import json
 
 
 def set_default_model(model_name):
