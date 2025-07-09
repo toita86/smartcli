@@ -37,7 +37,7 @@ The script will ask Ollama to convert the query into a Bash command and then pro
 Smartcli has several features that make it a powerful tool for automating tasks on Linux systems:
 
 * **Natural Language Support**: Smartcli uses Ollama to convert natural language instructions into Bash commands. This means that users can give their instructions in their own words, rather than having to learn a specific syntax or command structure.
-
+* **Using different models**: Supports every Ollama model that's available.
 
 ## To do:
 * **Dangerous commands**: If the command suggested can cause serious harm a warning is showed
